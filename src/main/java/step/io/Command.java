@@ -1,0 +1,11 @@
+package step.io;
+
+public enum Command {
+  TIMETABLE_SHOW,
+  TIMETABLE_SHOWBYFLIGHT,
+  BOOKING_ADD,
+  BOOKING_REMOVE,
+  BOOKING_MYFLIGHT,
+  HELP,
+  EXIT
+}

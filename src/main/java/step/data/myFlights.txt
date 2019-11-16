@@ -1,0 +1,6 @@
+LB05                26/12/2019          0500                Baku                London              12
+LB01                25/12/2019          0500                Baku                London              12
+MB064               26/12/2019          2200                Baku                Moscow              17
+KB016               27/12/2019          1200                Baku                Kiev                2
+LB01                25/12/2019          0500                Baku                London              12
+LB01                25/12/2019          0500                Baku                London              12
