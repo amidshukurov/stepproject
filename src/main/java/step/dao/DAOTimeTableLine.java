@@ -12,7 +12,6 @@ import java.util.Map;
 
 public class DAOTimeTableLine implements DAO<TimetableLine> {
     private final List<TimetableLine> data = new ArrayList<>();
-    private Map<Integer,TimetableLine> storage = new HashMap<>();
     BufferedReader br = new BufferedReader(new FileReader(new File("src/main/java/step/data/available_flights.txt")));
     TimetableLine ttl;
     String line;
@@ -23,7 +22,13 @@ public class DAOTimeTableLine implements DAO<TimetableLine> {
 
 
     @Override
-    public TimetableLine get(int id) throws IOException {
+    public TimetableLine get(String input) throws IOException, ParseException {
+        getAll();
+        for (int i = 0; i <data.size() ; i++) {
+            if (input.equalsIgnoreCase(data.get(i).getFlightId())){
+                return data.get(i);
+            }
+        }
         return null;
     }
 
@@ -53,8 +58,8 @@ public class DAOTimeTableLine implements DAO<TimetableLine> {
     }
 
     @Override
-    public void delete(int id) {
-        throw new IllegalArgumentException("DAOTimeTableLine:delete:not yet");
+    public void delete(TimetableLine timetableLine) {
 
     }
+
 }

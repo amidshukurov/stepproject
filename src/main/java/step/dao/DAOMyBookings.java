@@ -23,8 +23,7 @@ public class DAOMyBookings implements DAO<TimetableLine> {
 
 
     @Override
-    public TimetableLine get(int id) throws IOException {
-
+    public TimetableLine get(String input) throws IOException {
         return null;
     }
 
@@ -57,8 +56,8 @@ public class DAOMyBookings implements DAO<TimetableLine> {
     }
 
     @Override
-    public void delete(int id) {
-        throw new IllegalArgumentException("DAOTimeTableLine:delete:not yet");
+    public void delete(TimetableLine timetableLine) {
 
     }
+
 }

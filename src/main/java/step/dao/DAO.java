@@ -5,8 +5,8 @@ import java.text.ParseException;
 import java.util.List;
 
 public interface DAO<T> {
-  T get(int id) throws IOException;
+  T get(String t) throws IOException, ParseException;
   List<T> getAll() throws IOException, ParseException;
   void put(T t);
-  void delete(int id);
+  void delete(T t);
 }

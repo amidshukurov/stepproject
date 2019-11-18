@@ -18,43 +18,27 @@ import java.util.List;
 
 public class TimetableController {
   DAOTimeTableLine show = new DAOTimeTableLine();
-  List<TimetableLine> data = show.getAll();
   Console console = new SystemConsole();
-  BufferedReader br = new BufferedReader(new FileReader(new File("src/main/java/step/data/available_flights.txt")));
-  TimetableLine ttl;
-  String line;
-  String[] splitedLine;
 
   public TimetableController() throws IOException, ParseException {
   }
 
   public void show() throws IOException, ParseException {
-
+    List<TimetableLine> data = show.getAll();
     for (int i = 0; i <data.size() ; i++) {
       System.out.println( data.get(i).toString());
     }
   }
 
-
   public void showDetail() throws IOException, ParseException {
     show();
     System.out.println("Select flight id");
     String input = console.readLn();
-    while ((line = br.readLine()) != null) {
-      splitedLine =line.split(" ");
-      ttl = new TimetableLine(splitedLine[0],
-              new SimpleDateFormat("dd/MM/yyyy").parse(splitedLine[1]),
-              new SimpleDateFormat("HHmm").parse(splitedLine[2]),
-              new City(1,splitedLine[3]),
-              new City(2,splitedLine[4]),
-              Integer.parseInt(splitedLine[5]));
-      data.add(ttl);
-      if (input.equalsIgnoreCase(ttl.getFlightId())){
+    if (show.get(input)!= null){
 
-        System.out.println(ttl.toString()); break;
-      }
-      if (line==null) break;
+      System.out.println(show.get(input).toString());
     }
-    br.close();
+    else {
+      System.out.println("No flight found");}
   }
 }
