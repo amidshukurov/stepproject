@@ -1,7 +1,6 @@
 package step;
 
 import step.controller.BookingController;
-import step.controller.MainController;
 import step.controller.TimetableController;
 import step.io.Command;
 import step.io.Parser;
@@ -16,7 +15,6 @@ public class Core {
   private final Parser parser;
   private final BookingController bookingController;
   private final TimetableController timetableController;
-  private final MainController mainController;
 
   public Core(Console console) throws IOException, ParseException {
     this.console = console;
@@ -24,7 +22,6 @@ public class Core {
     this.parser = new Parser();
     this.timetableController = new TimetableController();
     this.bookingController = new BookingController();
-    this.mainController = new MainController();
   }
 
   public void run() throws IOException, ParseException {
