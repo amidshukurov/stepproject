@@ -5,6 +5,7 @@ import step.SystemConsole;
 import step.dao.DAOTimeTableLine;
 import step.entity.City;
 import step.entity.TimetableLine;
+import step.service.TimeTableService;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,14 +18,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class TimetableController {
-  DAOTimeTableLine show = new DAOTimeTableLine();
   Console console = new SystemConsole();
 
-  public TimetableController() throws IOException, ParseException {
-  }
 
   public void show() throws IOException, ParseException {
-    List<TimetableLine> data = show.getAll();
+      List<TimetableLine> data = new  TimeTableService().serviceGetAll();
     for (int i = 0; i <data.size() ; i++) {
       System.out.println( data.get(i).toString());
     }
@@ -32,13 +30,12 @@ public class TimetableController {
 
   public void showDetail() throws IOException, ParseException {
     show();
-    System.out.println("Select flight id");
-    String input = console.readLn();
-    if (show.get(input)!= null){
-
-      System.out.println(show.get(input).toString());
-    }
-    else {
-      System.out.println("No flight found");}
-  }
+    TimetableLine result = new TimeTableService().serviceShowDetail();
+   if(result!=null)
+   {
+       System.out.println(result.toString());
+   } else {
+       System.out.println("No such flight exist.");
+   }
+}
 }

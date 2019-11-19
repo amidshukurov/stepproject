@@ -6,16 +6,16 @@ import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class DAOTimeTableLine implements DAO<TimetableLine> {
     private final List<TimetableLine> data = new ArrayList<>();
     BufferedReader br = new BufferedReader(new FileReader(new File("src/main/java/step/data/available_flights.txt")));
     TimetableLine ttl;
     String line;
-    String[] splitedLine;
+    String[] splitedLine = new String[6];
+    String[] result ;
+
 
     public DAOTimeTableLine() throws FileNotFoundException, IOException {
     }
@@ -34,18 +34,21 @@ public class DAOTimeTableLine implements DAO<TimetableLine> {
 
     @Override
     public List<TimetableLine> getAll() throws IOException, ParseException {
-
-        int id =1;
         while ((line = br.readLine()) != null) {
-            splitedLine =line.split(" ");
+            result =line.split(" ");
+            int j=0;
+            for (int i = 0; i < result.length ; i++) {
+                if (!result[i].equals("")) {
+                    splitedLine[j++] = result[i];
+                }
+            }
             ttl = new TimetableLine(splitedLine[0],
                     new SimpleDateFormat("dd/MM/yyyy").parse(splitedLine[1]),
                     new SimpleDateFormat("HHmm").parse(splitedLine[2]),
-                    new City(id,splitedLine[3]),
-                    new City(id,splitedLine[4]),
+                    new City(1,splitedLine[3]),
+                    new City(2,splitedLine[4]),
                     Integer.parseInt(splitedLine[5]));
             data.add(ttl);
-            id++;
             if (line==null) break;
         }
         return data;

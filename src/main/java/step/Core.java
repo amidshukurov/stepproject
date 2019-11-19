@@ -29,8 +29,8 @@ public class Core {
 
   public void run() throws IOException, ParseException {
     boolean cont = true;
-    console.printLn(menu.show());
     while (cont) {
+      console.printLn(menu.show());
       String line = console.readLn();
       Command user_input = parser.parse(line);
       switch (user_input) {
@@ -57,7 +57,6 @@ public class Core {
           console.printLn(menu.show());
           break;
       }
-      console.printLn(menu.show());
     }
   }
 }

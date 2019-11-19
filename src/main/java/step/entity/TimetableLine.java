@@ -47,8 +47,12 @@ public class TimetableLine {
     TimetableLine that = (TimetableLine) o;
 
     if (flightId!=that.flightId) return false;
-    if (date != that.date& time != that.time) return false;
+    if (date != that.date & time != that.time&freeSeat!= that.freeSeat) return false;
 
+
+    if (date != that.date & time != that.time) return false;
+
+    if (date != that.date & time != that.time) return false;
     if (src != null ? !src.equals(that.src) : that.src != null) return false;
 
     return dst != null ? dst.equals(that.dst) : that.dst == null;
