@@ -1,5 +1,5 @@
 MB01                25/12/2019          0100                Baku                Moscow              0
-MB03                25/12/2019          0200                Baku                Minsk               34
+MB03                25/12/2019          0200                Baku                Minsk               14
 IB03                25/12/2019          0300                Baku                Istanbul            5
 PB01                25/12/2019          0400                Baku                Paris               56
 LB01                25/12/2019          0500                Baku                London              12

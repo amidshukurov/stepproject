@@ -2,6 +2,7 @@ package step.entity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 public class TimetableLine {
   private final String flightId;
@@ -29,41 +30,24 @@ public class TimetableLine {
             src.getName(),
             dst.getName(),
             freeSeat);
-/*
-
-            "TimetableLine = {" +
-            "FlightId= "+flightId +
-            ", Date= " + new SimpleDateFormat("dd/MM/yyyy").format(date)+
-            ", Time= "+ new SimpleDateFormat("dd/MM/yyyy").format(time) +
-            ", src=" + src.getName() +
-            ", dst=" + dst.getName() +
-        '}'*/
   }
 
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
-    if (!(o instanceof TimetableLine)) return false;
+    if (o == null || getClass() != o.getClass()) return false;
     TimetableLine that = (TimetableLine) o;
-
-    if (flightId!=that.flightId) return false;
-    if (date != that.date & time != that.time&freeSeat!= that.freeSeat) return false;
-
-
-    if (date != that.date & time != that.time) return false;
-
-    if (date != that.date & time != that.time) return false;
-    if (src != null ? !src.equals(that.src) : that.src != null) return false;
-
-    return dst != null ? dst.equals(that.dst) : that.dst == null;
+    return freeSeat == that.freeSeat &&
+            flightId.equals(that.flightId) &&
+            date.equals(that.date) &&
+            time.equals(that.time) &&
+            src.equals(that.src) &&
+            dst.equals(that.dst);
   }
 
   @Override
   public int hashCode() {
-    int result = src != null ? src.hashCode() : 0;
-    result = 31 * result + (dst != null ? dst.hashCode() : 0);
-    result = 31 * result + freeSeat;
-    return result;
+    return Objects.hash(flightId, date, time, src, dst, freeSeat);
   }
 
   public String getFlightId() {

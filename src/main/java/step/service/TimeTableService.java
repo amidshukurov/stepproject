@@ -26,9 +26,9 @@ public class TimeTableService {
     }
 
 
-    public void addingToFile (List<TimetableLine> origin) throws IOException, ParseException {
+    public void addingToFile(List<TimetableLine> origin) {
 
-        for (int i = 0; i <origin.size() ; i++) {
+        for (int i = 0; i < origin.size(); i++) {
             try (
                     BufferedWriter bw =
                             new BufferedWriter(new FileWriter(new File("src/main/java/step/data/available_flights.txt")));

@@ -17,7 +17,7 @@ public class DAOTimeTableLine implements DAO<TimetableLine> {
     String[] result ;
 
 
-    public DAOTimeTableLine() throws FileNotFoundException, IOException {
+    public DAOTimeTableLine() throws IOException {
     }
 
 
@@ -61,8 +61,9 @@ public class DAOTimeTableLine implements DAO<TimetableLine> {
     }
 
     @Override
-    public void delete(TimetableLine timetableLine) {
+    public void delete(String t) {
 
     }
+
 
 }

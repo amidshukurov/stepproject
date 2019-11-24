@@ -4,4 +4,5 @@ MB08                26/12/2019          0100                Baku                
 MB08                26/12/2019          0100                Baku                Moscow              0
 MB064               26/12/2019          2200                Baku                Moscow              0
 KB016               27/12/2019          1200                Baku                Kiev                0
+KB016               27/12/2019          1200                Baku                Kiev                0
 MB099               26/12/2019          2000                Baku                Moscow              1

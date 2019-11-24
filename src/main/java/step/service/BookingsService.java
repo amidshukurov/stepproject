@@ -20,7 +20,7 @@ public class BookingsService {
     TimetableLine ttl;
     String line;
     String[] splitedLine = new String[6];
-    String[] result ;
+    String[] result;
     Console console = new SystemConsole();
 
     public BookingsService() throws IOException {
@@ -31,33 +31,33 @@ public class BookingsService {
         List<TimetableLine> data = show.getAll();
         List<TimetableLine> result = new ArrayList<>();
         int count = 0;
-        for (int i = 0; i <data.size() ; i++) {
-            if(request.toLowerCase().equalsIgnoreCase(data.get(i).getDst().getName())){
+        for (int i = 0; i < data.size(); i++) {
+            if (request.toLowerCase().equalsIgnoreCase(data.get(i).getDst().getName())) {
                 count++;
                 result.add(data.get(i));
             }
         }
-        if (count==data.size()) System.out.println("No flight found");
+        if (count == data.size()) System.out.println("No flight found");
         return result;
     }
+
     public void addService() throws IOException, ParseException {
-        List<TimetableLine> myFlight = showBooking.getAll();;
         List<TimetableLine> searchResult;
-        List<TimetableLine> availableFlightsAfterBooking = show.getAll();
-        while (true){
+        List<TimetableLine> availableFlightsAfterBooking = new DAOTimeTableLine().getAll();
+        while (true) {
             System.out.println("Enter Destination City:");
             String dest = console.readLn();
             searchResult = search(dest);
-            if (searchResult.size()<1) {
+            if (searchResult.size() < 1) {
                 continue;
             }
             break;
         }
 
-        for (int i = 0; i <searchResult.size() ; i++) {
-            System.out.println( searchResult.get(i).toString());
+        for (int i = 0; i < searchResult.size(); i++) {
+            System.out.println(searchResult.get(i).toString());
         }
-        boolean cont=true;
+        boolean cont = true;
         while (cont) {
             System.out.println("Select flight number for booking");
             String flightid = console.readLn();
@@ -65,17 +65,18 @@ public class BookingsService {
                 if (flightid.toLowerCase().equalsIgnoreCase(searchResult.get(i).getFlightId())) {
                     System.out.println("How many seat do you want?");
                     int seat = Integer.parseInt(console.readLn());
-                    if (seat < searchResult.get(i).getFreeSeat()) {
+                    if (seat <= searchResult.get(i).getFreeSeat()) {
+                        System.out.println("AMID");
+                        System.out.println();
+                        for (int j = 0; j < availableFlightsAfterBooking.size(); j++) {
+                            if (availableFlightsAfterBooking.get(j).equals(searchResult.get(i))) {
+                                availableFlightsAfterBooking.get(j).setFreeSeat(availableFlightsAfterBooking.get(j).getFreeSeat() - seat);
+                            }
+                        }
                         searchResult.get(i).setFreeSeat(seat);
-                        myFlight.add(searchResult.get(i));
-//                        for (int j = 0; j <availableFlightsAfterBooking.size() ; j++) {
-//                            if (availableFlightsAfterBooking.get(j).equals(searchResult.get(i))){
-//                                System.out.println(availableFlightsAfterBooking.get(j).toString());
-//                                availableFlightsAfterBooking.get(j).setFreeSeat(availableFlightsAfterBooking.get(j).getFreeSeat()-seat);
-//                            }
-//                        }
+                        showBooking.put(searchResult.get(i));
                         new TimeTableService().addingToFile(availableFlightsAfterBooking);
-                        cont=false;
+                        cont = false;
                         break;
                     } else {
                         System.out.printf("No seat available. The number of available seats in this flight are %d", searchResult.get(i).getFreeSeat());
@@ -86,7 +87,6 @@ public class BookingsService {
                 }
             }
         }
-        addingToFile(myFlight);
 
 
     }
@@ -95,64 +95,15 @@ public class BookingsService {
         showMyFlightService();
         System.out.println("Select Flightid to cancel");
         String input = console.readLn();
-        List<TimetableLine> data = new ArrayList<>();
-        String[] result;
-
-        while ((line = br.readLine()) != null) {
-            result =line.split(" ");
-            int j=0;
-            for (int i = 0; i < result.length ; i++) {
-                if (!result[i].equals("")) {
-                    splitedLine[j++] = result[i];
-                }
-            }
-            ttl = new TimetableLine(splitedLine[0],
-                    new SimpleDateFormat("dd/MM/yyyy").parse(splitedLine[1]),
-                    new SimpleDateFormat("HHmm").parse(splitedLine[2]),
-                    new City(1,splitedLine[3]),
-                    new City(1,splitedLine[4]),
-                    Integer.parseInt(splitedLine[5]));
-
-            if (!input.equalsIgnoreCase(ttl.getFlightId())){
-
-                data.add(ttl);
-            }
-            if (line==null) break;
-        }
-        br.close();
-        addingToFile(data);
+        showBooking.delete(input);
 
     }
 
     public void showMyFlightService() throws IOException, ParseException {
-        for (int i = 0; i <showBooking.getAll().size() ; i++) {
-            System.out.println( showBooking.getAll().get(i).toString());
+        for (int i = 0; i < showBooking.getAll().size(); i++) {
+            System.out.println(showBooking.getAll().get(i).toString());
         }
 
     }
-    public void addingToFile (List<TimetableLine> origin) throws IOException, ParseException {
-
-        for (int i = 0; i <origin.size() ; i++) {
-            try (
-                    BufferedWriter bw =
-                            new BufferedWriter(new FileWriter(new File("src/main/java/step/data/myFlights.txt")));
-            ) {
-                origin.forEach(c -> {
-                    try {
-                        bw.write(c.toString());
-                        bw.newLine();
-                    } catch (IOException e) {
-                        System.out.println("smth went wrong during cities file filling");
-                    }
-                });
-            } catch (IOException e) {
-                System.out.println("smth went wrong during cities file creation");
-            }
-
-        }
-
-
-    }
-
 
 }

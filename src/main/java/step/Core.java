@@ -16,7 +16,7 @@ public class Core {
   private final BookingController bookingController;
   private final TimetableController timetableController;
 
-  public Core(Console console) throws IOException, ParseException {
+  public Core(Console console) throws IOException {
     this.console = console;
     this.menu = new Menu();
     this.parser = new Parser();
