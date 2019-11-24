@@ -26,27 +26,4 @@ public class TimeTableService {
     }
 
 
-    public void addingToFile(List<TimetableLine> origin) {
-
-        for (int i = 0; i < origin.size(); i++) {
-            try (
-                    BufferedWriter bw =
-                            new BufferedWriter(new FileWriter(new File("src/main/java/step/data/available_flights.txt")));
-            ) {
-                origin.forEach(c -> {
-                    try {
-                        bw.write(c.toString());
-                        bw.newLine();
-                    } catch (IOException e) {
-                        System.out.println("smth went wrong during cities file filling");
-                    }
-                });
-            } catch (IOException e) {
-                System.out.println("smth went wrong during cities file creation");
-            }
-
-        }
-
-
-    }
 }

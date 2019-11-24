@@ -4,23 +4,16 @@ import step.Console;
 import step.SystemConsole;
 import step.dao.DAOMyBookings;
 import step.dao.DAOTimeTableLine;
-import step.entity.City;
 import step.entity.TimetableLine;
 
 import java.io.*;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BookingsService {
-    DAOTimeTableLine show = new DAOTimeTableLine();
-    DAOMyBookings showBooking = new DAOMyBookings();
-    BufferedReader br = new BufferedReader(new FileReader(new File("src/main/java/step/data/myFlights.txt")));
-    TimetableLine ttl;
-    String line;
-    String[] splitedLine = new String[6];
-    String[] result;
+    DAOTimeTableLine daoTimeTableLine = new DAOTimeTableLine();
+    DAOMyBookings daoMyBookings = new DAOMyBookings();
     Console console = new SystemConsole();
 
     public BookingsService() throws IOException {
@@ -28,7 +21,7 @@ public class BookingsService {
 
     public List<TimetableLine> search(String request) throws IOException, ParseException {
 
-        List<TimetableLine> data = show.getAll();
+        List<TimetableLine> data = daoTimeTableLine.getAll();
         List<TimetableLine> result = new ArrayList<>();
         int count = 0;
         for (int i = 0; i < data.size(); i++) {
@@ -74,8 +67,8 @@ public class BookingsService {
                             }
                         }
                         searchResult.get(i).setFreeSeat(seat);
-                        showBooking.put(searchResult.get(i));
-                        new TimeTableService().addingToFile(availableFlightsAfterBooking);
+                        daoMyBookings.put(searchResult.get(i));
+                        daoTimeTableLine.addingToFile(availableFlightsAfterBooking);
                         cont = false;
                         break;
                     } else {
@@ -95,13 +88,13 @@ public class BookingsService {
         showMyFlightService();
         System.out.println("Select Flightid to cancel");
         String input = console.readLn();
-        showBooking.delete(input);
+        daoMyBookings.delete(input);
 
     }
 
     public void showMyFlightService() throws IOException, ParseException {
-        for (int i = 0; i < showBooking.getAll().size(); i++) {
-            System.out.println(showBooking.getAll().get(i).toString());
+        for (int i = 0; i < daoMyBookings.getAll().size(); i++) {
+            System.out.println(daoMyBookings.getAll().get(i).toString());
         }
 
     }
